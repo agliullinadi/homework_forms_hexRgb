@@ -7,8 +7,8 @@ function HexRgb() {
     function getHex(hex) {
         const digit = hex.slice(1).split("");
         const r = parseInt([digit[0], digit[1]].join(""), 16);
-        const g = parseInt([digit[4], digit[5]].join(""), 16);
-        const b = parseInt([digit[2], digit[3]].join(""), 16);
+        const g = parseInt([digit[2], digit[3]].join(""), 16);
+        const b = parseInt([digit[4], digit[5]].join(""), 16);
         return [r, g, b];
     }
 
@@ -17,16 +17,16 @@ function HexRgb() {
 
     const handleSubmit = (e) => {
         e.preventDefault();
-
-        if (regexp.test(form.hex)) {
-            setForm((prev) => ({ ...prev, rgba: getHex(form.hex), text: ["rgb(", ")"] }))
-        } else if (form.hex.length === 7) {
-            setForm((prev) => ({ ...prev, rgba: ["Ошибка!"], text: ["", ""] }))
-        }
     }
 
     const handleChange = (e) => {
+        const { value } = e.target
         setForm((prev) => ({ ...prev, hex: e.target.value }))
+        if (regexp.test(value)) {
+            setForm((prev) => ({ ...prev, rgba: getHex(value), text: ["rgb(", ")"] }))
+        } else if (value.length === 7) {
+            setForm((prev) => ({ ...prev, rgba: ["Ошибка!"], text: ["", ""] }))
+        }
     }
 
     return (
@@ -36,7 +36,7 @@ function HexRgb() {
                 type="text"
                 maxLength="7"
                 onChange={handleChange}
-                value={form.hex}
+                placeholder="Введите hex"
             />
             <div className="color-rgb">
                 {form.text[0]}
